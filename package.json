@@ -1,0 +1,22 @@
+{
+	"name": "dogs-2",
+	"version": "1.0.0",
+	"description": "a website for viewing dog pics",
+	"main": "server.js",
+	"scripts": {
+		"start": "nodemon server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/gohsumin/dogs-2.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/gohsumin/dogs-2/issues"
+	},
+	"homepage": "https://github.com/gohsumin/dogs-2#readme",
+	"dependencies": {
+		"nodemon": "^3.0.1"
+	}
+}
