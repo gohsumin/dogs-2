@@ -25,26 +25,51 @@ function makeSlideshow(mainBreed) {
 	$slideshow.className = `slideshow ${mainBreed}`;
 	const images = cards[mainBreed].images;
 	if (!Array.isArray(images)) {
-		Object.getOwnPropertyNames(images).forEach(subBreed => {
+		Object.keys(images).forEach(subBreed => {
 			images[subBreed].forEach(img => {
+				const $img = new Image();
 				const $slide = document.createElement('div');
 				$slide.className = `slide ${subBreed}`;
-				const $img = document.createElement('img');
-				$img.src = img;
 				$slide.append($img);
 				$slideshow.append($slide);
+				$img.addEventListener('error', () => {
+					$slide.remove();
+				});
+				$img.src = img;
 			});
 		});
 	} else if (Array.isArray(images)) {
 		images.forEach(img => {
+			const $img = new Image();
 			const $slide = document.createElement('div');
 			$slide.className = 'slide';
-			const $img = document.createElement('img');
-			$img.src = img;
 			$slide.append($img);
 			$slideshow.append($slide);
+			$img.addEventListener('error', () => {
+				$slide.remove();
+			});
+			$img.src = img;
 		});
 	}
+	let scrollTimestamp;
+	let idle;
+	$slideshow.addEventListener('wheel', (event) => {
+		scrollTimestamp = new Date().getTime();
+		const scrollLeft = event.currentTarget.scrollLeft;
+		idle = false;
+		setTimeout(() => {
+			if (!idle && new Date().getTime() - scrollTimestamp >= 50) {
+				const width = $slideshow.clientWidth;
+				const rightPriority = scrollLeft % width > width / 2 ? width : 0;
+				const scrollTo = (Math.floor(scrollLeft / width) + (rightPriority ? 1 : 0)) * width;
+				console.log(`Math.floor(scrollLeft / width) = ${scrollLeft / width}`);
+				console.log(`scrollLeft=${scrollLeft}, width=${width}, rightPriority=${rightPriority}, scrollTo=${scrollTo}`);
+				$slideshow.scroll({ left: scrollTo, behavior: 'smooth' });
+				idle = true;
+				scrollTimestamp = new Date().getTime();
+			}
+		}, 50);
+	});
 	return $slideshow;
 }
 
@@ -62,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (dogs[mainBreed].length) {
 				const $innerUl = document.createElement('ul');
 				const numSubBreedImages = (minNumImages / dogs[mainBreed].length < 1)
-					? (dogs[mainBreed].length * 2)
+					? 3
 					: (minNumImages / dogs[mainBreed].length);
 				let subBreedImages = {};
 				for (subBreed of dogs[mainBreed]) {
