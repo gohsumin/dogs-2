@@ -1,5 +1,15 @@
+:root {
+	--accent: 211, 50, 160;
+	--dark: 102, 114, 121;
+	--light: 250, 253, 245;
+}
+
 * {
 	box-sizing: border-box;
+}
+
+.hide {
+	display: none !important;
 }
 
 body {
@@ -13,17 +23,18 @@ body {
 main {
 	width: 100%;
 	padding: 32px 24px;
-	/* background-color: #ffedf3; */
+	background-color: rgba(var(--light), 0.98);
 }
 
 nav {
 	width: 100%;
 	padding: 16px;
-	background-color: white;
 	box-shadow: 0px -8px 18px -4px black;
 	z-index: 2;
 	position: sticky;
 	top: 0;
+	background-color: rgba(var(--light), 0.9);
+	backdrop-filter: blur(20px);
 }
 
 ul {
@@ -46,14 +57,15 @@ nav ul {
 
 nav li:not(:has(a)) {
 	font-weight: 600;
+	color: var(--accent);
 }
 
 nav li a {
 	text-decoration: underline;
 	text-underline-offset: 2px;
 	text-decoration-thickness: 0.5px;
-	text-decoration-color: black;
-	color: #000;
+	text-decoration-color: var(--accent);
+	color: var(--accent);
 }
 
 main > ul {
@@ -80,38 +92,22 @@ main > ul {
 	}
 }
 
-main > ul > li {
+.card {
 	position: relative;
 	display: flex;
-	padding: 20px;
 	width: 100%;
 	height: 230px;
 	justify-content: space-between;
-	background-color: white;
-	box-shadow: 19px -13px 22px -21px gainsboro, 4px 7px 15px -15px gray, 2px 0px 2px -2px gainsboro, -2px -2px 4px -4px gainsboro;
-	border-radius: 8px;
-	overflow: hidden;
-}
-
-main > ul > li > ul {
-	max-height: 68px;
-	overflow: scroll;
-	gap: 8px;
-	z-index: 1;
-}
-
-main > ul > li > ul > li {
-	height: fit-content;
-	background-color: rgb(242, 216, 227);
-	border-radius: 8px;
-	padding: 4px 8px;
 }
 
 .dog-name {
 	z-index: 1;
-	position: relative;
+	position: absolute;
+	top: 2px;
+	left: 2px;
 	width: fit-content;
 	font-weight: 600;
+	color: rgba(var(--light));
 }
 
 .dog-name::before {
@@ -121,13 +117,26 @@ main > ul > li > ul > li {
 	left: -8px;
 	width: calc(100% + 16px);
 	height: calc(100% + 16px);
-	background-color: floralwhite;
-	opacity: .6;
+	background-color: rgba(var(--accent), 0.8);
+	backdrop-filter: blur(32px);
 	z-index: -1;
-	border-radius: 2px;
+	border-radius: 8px;
+}
+
+.slideshow-container {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	box-shadow: 19px -13px 22px -21px gainsboro, 4px 7px 15px -15px gray, 2px 0px 2px -2px gainsboro, -2px -2px 4px -4px gainsboro;
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 .slideshow {
+	scroll-behavior: smooth;
+	scroll-snap-type: x mandatory;
 	display: flex;
 	overflow: scroll;
 	position: absolute;
@@ -138,6 +147,7 @@ main > ul > li > ul > li {
 }
 
 .slide {
+	scroll-snap-align: center;
 	height: 100%;
 	min-width: 100%;
 	display: flex;
@@ -147,4 +157,84 @@ main > ul > li > ul > li {
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
+	cursor: default !important;
+}
+
+.scroll-left,
+.scroll-right {
+	position: absolute;
+	width: 16%;
+	height: 100%;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all .2s;
+	cursor: pointer;
+}
+
+.scroll-left:hover,
+.scroll-right:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.scroll-left::after,
+.scroll-right::after {
+	content: '';
+	position: absolute;
+	display: flex;
+	width: 94%;
+	aspect-ratio: 1;
+	background-color: rgba(var(--light));
+	mask-position: center;
+	mask-repeat: no-repeat;
+	mask-size: contain;
+	mask-image: url(./images/chevron-left-circle-svgrepo-com.svg);
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	-webkit-mask-image: url(./images/chevron-left-circle-svgrepo-com.svg);
+	opacity: 0;
+	transition: all .2s;
+}
+
+.scroll-left:hover::after,
+.scroll-right:hover::after {
+	opacity: 0.9;
+}
+
+.scroll-left::after:hover,
+.scroll-right::after:hover {
+	opacity: 1;
+}
+
+.scroll-left {
+	left: 0;
+}
+
+.scroll-right {
+	right: 0;
+}
+
+.scroll-right::after {
+	transform: scaleX(-1);
+}
+
+.sub-list {
+	max-height: 68px;
+	overflow: scroll;
+	gap: 8px;
+	z-index: 1;
+	position: absolute;
+	bottom: 8px;
+	left: 8px;
+}
+
+.sub-list > li {
+	height: fit-content;
+	color: var(--dark);
+	backdrop-filter: blur(32px);
+	background-color: rgba(var(--light), 0.9);
+	border-radius: 8px;
+	padding: 4px 8px;
 }

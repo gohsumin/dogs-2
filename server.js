@@ -20,6 +20,14 @@ http.createServer(function (req, res) {
 			});
 			return;
 		};
+		case '.svg': {
+			res.writeHead(200, { 'Content-type': 'image/svg+xml' });
+			fs.readFile(__dirname + req.url, 'utf8', function (err, svg) {
+				if (err) throw err;
+				res.end(svg);
+			});
+			return;
+		}
 		default:
 			break;
 	}
