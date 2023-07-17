@@ -1,0 +1,32 @@
+@property --accent-r {
+	syntax: '<number>';
+	initial-value: 221;
+	inherits: false;
+}
+
+@property --accent-g {
+	syntax: '<number>';
+	initial-value: 70;
+	inherits: false;
+}
+
+@property --accent-b {
+	syntax: '<number>';
+	initial-value: 90;
+	inherits: false;
+}
+
+:root {
+	--dark: 102, 114, 121;
+	--light: 250, 253, 245;
+	--accent: var(--accent-r), var(--accent-g), var(--accent-b);
+	animation: 50s changeAccentColor infinite;
+}
+
+@keyframes changeAccentColor {
+	50% {
+		--accent-r: 70;
+		--accent-g: 125;
+		--accent-b: 100;
+	}
+}

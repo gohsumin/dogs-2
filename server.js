@@ -1,6 +1,10 @@
-const http = require('http'),
-      path = require('path'),
-        fs = require('fs');
+import * as http from 'http';
+import * as path from 'path';
+import * as fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 http.createServer(function (req, res) {
 	switch (path.extname(req.url)) {

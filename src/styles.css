@@ -1,8 +1,4 @@
-:root {
-	--accent: 211, 50, 160;
-	--dark: 102, 114, 121;
-	--light: 250, 253, 245;
-}
+@import url('./colors.css');
 
 * {
 	box-sizing: border-box;
@@ -10,6 +6,10 @@
 
 .hide {
 	display: none !important;
+}
+
+a {
+	color: unset;
 }
 
 body {
@@ -27,14 +27,20 @@ main {
 }
 
 nav {
+	padding: 8px 32px;
 	width: 100%;
-	padding: 16px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	box-shadow: 0px -8px 18px -4px black;
 	z-index: 2;
 	position: sticky;
 	top: 0;
-	background-color: rgba(var(--light), 0.9);
+	color: rgba(var(--light));
+	background-color: rgba(var(--accent), 0.9);
 	backdrop-filter: blur(20px);
+	transition: all .2s;
 }
 
 ul {
@@ -57,15 +63,28 @@ nav ul {
 
 nav li:not(:has(a)) {
 	font-weight: 600;
-	color: var(--accent);
 }
 
 nav li a {
-	text-decoration: underline;
+	text-decoration: none;
 	text-underline-offset: 2px;
 	text-decoration-thickness: 0.5px;
-	text-decoration-color: var(--accent);
-	color: var(--accent);
+}
+
+.search {
+	display: flex;
+	height: 100%;
+	max-height: 40px;
+	width: 20%;
+	border-radius: 16px;
+	border: none;
+	transition: all .3s;
+}
+
+.search:focus {
+	outline: none;
+	border: 1px solid rgb(var(--accent));
+	padding: 8px 16px;
 }
 
 main > ul {
@@ -129,7 +148,7 @@ main > ul {
 	width: 100%;
 	height: 100%;
 	background-color: white;
-	box-shadow: 19px -13px 22px -21px gainsboro, 4px 7px 15px -15px gray, 2px 0px 2px -2px gainsboro, -2px -2px 4px -4px gainsboro;
+	box-shadow: 19px -13px 22px -21px rgba(0,0,0, 0.5), 4px 7px 15px -15px rgba(0,0,0, 0.5), 2px 0px 2px -2px rgba(0,0,0, 0.2), -2px -2px 4px -4px rgba(0,0,0, 0.5);
 	border-radius: 8px;
 	overflow: hidden;
 }
@@ -149,8 +168,10 @@ main > ul {
 .slide {
 	scroll-snap-align: center;
 	height: 100%;
-	min-width: 100%;
+	width: 100%;
 	display: flex;
+	flex-shrink: 0;
+	flex-grow: 0;
 }
 
 .slide img {
@@ -158,6 +179,10 @@ main > ul {
 	width: 100%;
 	object-fit: cover;
 	cursor: default !important;
+}
+
+.slide img.clicked {
+	object-fit: contain;
 }
 
 .scroll-left,
@@ -222,12 +247,13 @@ main > ul {
 
 .sub-list {
 	max-height: 68px;
-	overflow: scroll;
+	overflow-y: scroll;
 	gap: 8px;
 	z-index: 1;
 	position: absolute;
 	bottom: 8px;
 	left: 8px;
+	scroll-snap-type: y mandatory;
 }
 
 .sub-list > li {
@@ -237,4 +263,5 @@ main > ul {
 	background-color: rgba(var(--light), 0.9);
 	border-radius: 8px;
 	padding: 4px 8px;
+	scroll-snap-align: start;
 }

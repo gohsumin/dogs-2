@@ -2,6 +2,7 @@
 	"name": "dogs-2",
 	"version": "1.0.0",
 	"description": "a website for viewing dog pics",
+	"type": "module",
 	"main": "server.js",
 	"scripts": {
 		"start": "nodemon server.js"
