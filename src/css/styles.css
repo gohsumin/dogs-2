@@ -1,0 +1,48 @@
+@import url('./colors.css');
+
+* {
+	box-sizing: border-box;
+}
+
+.opacity-0 {
+	opacity: 0 !important;
+}
+
+a {
+	color: unset;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+body {
+	padding: 86px 0 0 0;
+	margin: 0;
+	height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	font-family: Arial, Helvetica, sans-serif;
+	letter-spacing: .5px;
+	background-color: rgba(var(--dark), 0.1);
+}
+
+main {
+	display: flex;
+	width: 100%;
+	padding: 32px 74px;
+}
+
+@media screen and (max-width: 1200px) {
+	main {
+		padding: 32px 48px;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	main {
+		padding: 32px;
+	}
+}
