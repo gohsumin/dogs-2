@@ -8,6 +8,10 @@
 	opacity: 0 !important;
 }
 
+.hide {
+	display: none !important;
+}
+
 a {
 	color: unset;
 }

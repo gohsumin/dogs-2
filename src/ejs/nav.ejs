@@ -1,0 +1,10 @@
+<link rel='stylesheet' href='../css/nav.css'>
+<nav style='height: 80px;'>
+	<ul class='nav-links'>
+		<li<%= (url && (url === '/')) ? ' class=current' : '' %>><a href='/' >Home</a></li>
+		<li<%= (url && (url === '/dogs')) ? ' class=current' : '' %>><a href='/dogs' >All Dog Breeds</a></li>
+	</ul>
+	<div class='search'>
+		<input type='text'>
+	</div>
+</nav>

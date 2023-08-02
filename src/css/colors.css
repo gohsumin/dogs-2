@@ -6,13 +6,13 @@
 
 @property --accent-g {
 	syntax: '<number>';
-	initial-value: 125;
+	initial-value: 110;
 	inherits: false;
 }
 
 @property --accent-b {
 	syntax: '<number>';
-	initial-value: 100;
+	initial-value: 50;
 	inherits: false;
 }
 
@@ -20,13 +20,13 @@
 	--dark: 102, 114, 121;
 	--light: 250, 250, 245;
 	--accent: var(--accent-r), var(--accent-g), var(--accent-b);
-	animation: 50s changeAccentColor infinite;
+	animation: 20s changeAccentColor infinite;
 }
 
 @keyframes changeAccentColor {
 	50% {
-		--accent-r: 221;
+		--accent-r: 110;
 		--accent-g: 70;
-		--accent-b: 90;
+		--accent-b: 120;
 	}
 }

@@ -23,28 +23,40 @@ main > ul {
 }
 
 .dog-name {
+	display: flex;
 	z-index: 1;
 	position: absolute;
 	top: 2px;
 	left: 2px;
 	width: fit-content;
+	align-items: flex-end;
+	font-size: 16px;
 	font-weight: 600;
-	font-size: 17px;
 	color: rgba(var(--accent), 0.8);
+	transition: all .3s;
 }
 
 .dog-name::before {
 	content: '';
 	position: absolute;
-	top: -10px;
+	top: -8px;
 	left: -10px;
 	width: calc(100% + 16px);
-	height: calc(100% + 16px);
+	height: calc(100% + 12px);
 	border: 2px solid rgba(var(--accent), 0.8);
 	backdrop-filter: blur(32px);
-	background-color: rgba(255,255,255,0.6);
+	background-color: rgba(var(--light), 0.9);
 	z-index: -1;
 	border-radius: 8px;
+}
+
+.card[filter] .dog-name {
+	/* color: rgba(var(--accent), 0.6); */
+	gap: 5px;
+}
+
+.card[filter] .dog-name span {
+	color: rgba(var(--accent), 0.6);
 }
 
 .slideshow-container {
@@ -56,6 +68,10 @@ main > ul {
 	box-shadow: 19px -13px 22px -21px rgba(0,0,0, 0.5), 4px 7px 15px -15px rgba(0,0,0, 0.5), 2px 0px 2px -2px rgba(0,0,0, 0.2), -2px -2px 4px -4px rgba(0,0,0, 0.5);
 	border-radius: 8px;
 	overflow: hidden;
+}
+
+.loading .slideshow-container {
+	display: none;
 }
 
 .slideshow {
@@ -72,6 +88,7 @@ main > ul {
 
 .slide {
 	scroll-snap-align: center;
+	scroll-snap-stop: always;
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -99,7 +116,7 @@ main > ul {
 	top: 0;
 	display: flex;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.15);
 	opacity: 0;
 	align-items: center;
 	transition: all .2s;
@@ -153,30 +170,52 @@ main > ul {
 	opacity: 1 !important;
 }
 
-.sub-list {
-	max-height: 56px;
+.subbreed-list {
+	max-height: 52px;
 	overflow-y: scroll;
 	gap: 4px;
 	z-index: 1;
 	position: absolute;
-	bottom: 0;
-	left: 0;
-	padding: 4px;
+	right: 4px;
+	bottom: 8px;
+	left: 4px;
 	scroll-padding-bottom: 4px;
-	width: 100%;
 	scroll-snap-type: y mandatory;
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.sub-list > li {
+.subbreed-tag {
+	display: flex;
+	align-items: center;
 	color: var(--dark);
 	backdrop-filter: blur(32px);
-	background-color: rgba(var(--light), 0.9);
+	background-color: rgba(var(--light), 0.8);
 	border-radius: 8px;
 	padding: 4px 8px;
 	font-size: 13px;
 	line-height: 14px;
 	scroll-snap-align: end;
 	scroll-snap-stop: always;
+	user-select: none;
+	cursor: pointer;
+}
+
+.subbreed-tag.selected {
+	background-color: rgba(var(--light), 1);
+	border: 1px solid rgba(var(--accent), 0.8);
+	/* padding: 2px 6px; */
+}
+
+.subbreed-list::-webkit-scrollbar {
+	width: 8px;
+}
+
+.subbreed-list::-webkit-scrollbar-thumb {
+	background-color: rgba(var(--light), 0.6);
+	border-radius: 2px;
+}
+
+.loading .subbreed-list {
+	display: none;
 }
