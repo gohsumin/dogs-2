@@ -2,7 +2,7 @@ nav:has(.grid-view) + main .cards {
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	grid-gap: 28px;
+	grid-gap: 38px 28px;
 }
 
 nav:has(.list-view) + main .cards {
@@ -20,11 +20,10 @@ nav:has(.list-view) + main .cards {
 
 nav:has(.grid-view) + main .card {
 	aspect-ratio: 1;
-	justify-content: space-between;
 }
 
 nav:has(.list-view) + main .card {
-	height: 120px;
+	height: 130px;
 }
 
 .card.loading {
@@ -38,11 +37,10 @@ nav:has(.list-view) + main .card {
 
 .dog-name {
 	display: flex;
-	z-index: 1;
 	position: absolute;
-	top: 2px;
-	left: 2px;
+	z-index: 1;
 	width: fit-content;
+	padding: 6px 12px;
 	align-items: flex-end;
 	font-size: 16px;
 	font-weight: 600;
@@ -50,18 +48,29 @@ nav:has(.list-view) + main .card {
 	transition: all .3s;
 }
 
+nav:has(.grid-view) + main .dog-name {
+	left: 0;
+	right: 0;
+	margin: auto;
+	top: -16px;
+}
+
+nav:has(.list-view) + main .dog-name {
+	top: 4px;
+	left: 4px;
+}
+
 .dog-name::before {
 	content: '';
 	position: absolute;
-	top: -8px;
-	left: -10px;
-	width: calc(100% + 16px);
-	height: calc(100% + 12px);
-	border: 2px solid rgba(var(--accent), 0.8);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	backdrop-filter: blur(32px);
-	background-color: rgba(var(--light), 0.9);
+	background-color: rgba(var(--light-warm), 0.8);
 	z-index: -1;
-	border-radius: 8px;
+	border-radius: 2px;
 }
 
 .card[filter] .dog-name {
@@ -77,10 +86,19 @@ nav:has(.list-view) + main .card {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-color: white;
-	box-shadow: 19px -13px 22px -21px rgba(0,0,0, 0.5), 4px 7px 15px -15px rgba(0,0,0, 0.5), 2px 0px 2px -2px rgba(0,0,0, 0.2), -2px -2px 4px -4px rgba(0,0,0, 0.5);
+	box-shadow: 19px -13px 22px -21px rgba(var(--dark), 0.3), 4px 7px 15px -15px rgba(var(--dark), 0.3), 2px 0px 2px -2px rgba(var(--dark), 0.2), -2px -2px 4px -4px rgba(var(--dark), 0.3);
 	border-radius: 8px;
 	overflow: hidden;
+}
+
+nav:has(.list-view) + main .slideshow-container::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 180px;
+	background-color: rgba(var(--light-cool), 0.9);
 }
 
 .loading .slideshow-container {
@@ -89,7 +107,6 @@ nav:has(.list-view) + main .card {
 
 .slideshow {
 	scroll-behavior: smooth;
-	scroll-snap-type: x mandatory;
 	display: flex;
 	overflow: scroll;
 	position: absolute;
@@ -99,13 +116,16 @@ nav:has(.list-view) + main .card {
 	height: 100%;
 }
 
+nav:has(.grid-view) + main .slideshow {
+	scroll-snap-type: x mandatory;
+}
+
 nav:has(.list-view) + main .slideshow {
 	gap: 12px;
+	padding-left: 180px;
 }
 
 .slide {
-	scroll-snap-align: center;
-	scroll-snap-stop: always;
 	height: 100%;
 	display: flex;
 	flex-shrink: 0;
@@ -114,6 +134,12 @@ nav:has(.list-view) + main .slideshow {
 
 nav:has(.grid-view) + main .slide {
 	width: 100%;
+	scroll-snap-align: center;
+	scroll-snap-stop: always;
+}
+
+nav:has(.list-view) + main .slide {
+	padding: 8px;
 }
 
 .slide img {
@@ -122,6 +148,10 @@ nav:has(.grid-view) + main .slide {
 	object-fit: cover;
 	cursor: default !important;
 	user-select: none;
+}
+
+nav:has(.list-view) + main .slide img {
+	border-radius: 4px;
 }
 
 .slide img.clicked {
@@ -159,7 +189,7 @@ nav:has(.list-view) + main .scroll-right {
 	display: flex;
 	width: 94%;
 	aspect-ratio: 1;
-	background-color: rgba(var(--light));
+	background-color: rgba(var(--light-warm));
 	mask-position: center;
 	mask-repeat: no-repeat;
 	mask-size: contain;
@@ -174,6 +204,11 @@ nav:has(.list-view) + main .scroll-right {
 
 .scroll-left {
 	left: 0;
+}
+
+nav:has(.list-view) + main .scroll-left {
+	left: 180px;
+	z-index: 1;
 }
 
 .scroll-right {
@@ -200,30 +235,43 @@ nav:has(.list-view) + main .scroll-right {
 }
 
 .subbreed-list {
-	max-height: 52px;
-	overflow-y: scroll;
 	gap: 4px;
 	z-index: 1;
 	position: absolute;
-	right: 4px;
-	bottom: 8px;
-	left: 4px;
-	scroll-padding-bottom: 4px;
-	scroll-snap-type: y mandatory;
 	display: flex;
 	flex-wrap: wrap;
+	align-content: flex-start;
+	overflow-y: scroll;
+	scroll-snap-type: y mandatory;
+}
+
+nav:has(.grid-view) + main .subbreed-list {
+	max-height: 52px;
+	left: 4px;
+	right: 4px;
+	bottom: 8px;
+	scroll-padding-bottom: 4px;
+}
+
+nav:has(.list-view) + main .subbreed-list {
+	width: 180px;
+	max-height: 74px;
+	left: 4px;
+	bottom: 4px;
 }
 
 .subbreed-tag {
 	display: flex;
 	align-items: center;
+	height: fit-content;
+	width: fit-content;
+	padding: 4px 8px;
+	line-height: 14px;
+	font-size: 13px;
 	color: var(--dark);
 	backdrop-filter: blur(32px);
-	background-color: rgba(var(--light), 0.8);
+	background-color: rgba(var(--light-warm), 0.8);
 	border-radius: 8px;
-	padding: 4px 8px;
-	font-size: 13px;
-	line-height: 14px;
 	scroll-snap-align: end;
 	scroll-snap-stop: always;
 	user-select: none;
@@ -231,7 +279,7 @@ nav:has(.list-view) + main .scroll-right {
 }
 
 .subbreed-tag.selected {
-	background-color: rgba(var(--light), 1);
+	background-color: rgba(var(--light-warm), 1);
 	border: 1px solid rgba(var(--accent), 0.8);
 	padding: 3px 7px;
 }
@@ -241,8 +289,15 @@ nav:has(.list-view) + main .scroll-right {
 }
 
 .subbreed-list::-webkit-scrollbar-thumb {
-	background-color: rgba(var(--light), 0.6);
 	border-radius: 2px;
+}
+
+nav:has(.grid-view) + main .subbreed-list::-webkit-scrollbar-thumb {
+	background-color: rgba(var(--light-warm), 0.6);
+}
+
+nav:has(.list-view) + main .subbreed-list::-webkit-scrollbar-thumb {
+	background-color: rgba(var(--dark), 0.5);
 }
 
 .loading .subbreed-list {

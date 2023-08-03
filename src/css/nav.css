@@ -10,7 +10,7 @@ nav {
 	position: fixed;
 	top: 0;
 	color: rgba(var(--accent));
-	background-color: rgba(var(--light), 0.9);
+	background-color: rgba(var(--light-warm), 0.9);
 	backdrop-filter: blur(20px);
 	transition: all .2s;
 }
@@ -154,12 +154,13 @@ nav {
 	padding: 8px 16px 8px 40px;
 	background-color: rgba(var(--dark), 0.1);
 	border-radius: 16px;
-	border: 0px solid rgb(var(--dark));
-	transition: all .2s;
+	border: 0.1px solid transparent;
+	transition: all .1s;
 }
 
 .search input:focus {
 	background-color: rgba(var(--dark), 0.05);
 	outline: none;
-	box-shadow: 0px 0px 7px -5px black;
+	border: 0.1px solid rgb(var(--dark));
+	box-shadow: 0px 0px 6px -5px black;
 }
