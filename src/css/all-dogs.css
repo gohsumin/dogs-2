@@ -1,16 +1,30 @@
-main > ul {
+nav:has(.grid-view) + main .cards {
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	grid-gap: 28px;
 }
 
+nav:has(.list-view) + main .cards {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+}
+
 .card {
 	position: relative;
 	display: flex;
 	width: 100%;
+}
+
+nav:has(.grid-view) + main .card {
 	aspect-ratio: 1;
 	justify-content: space-between;
+}
+
+nav:has(.list-view) + main .card {
+	height: 120px;
 }
 
 .card.loading {
@@ -51,7 +65,6 @@ main > ul {
 }
 
 .card[filter] .dog-name {
-	/* color: rgba(var(--accent), 0.6); */
 	gap: 5px;
 }
 
@@ -86,14 +99,21 @@ main > ul {
 	height: 100%;
 }
 
+nav:has(.list-view) + main .slideshow {
+	gap: 12px;
+}
+
 .slide {
 	scroll-snap-align: center;
 	scroll-snap-stop: always;
 	height: 100%;
-	width: 100%;
 	display: flex;
 	flex-shrink: 0;
 	flex-grow: 0;
+}
+
+nav:has(.grid-view) + main .slide {
+	width: 100%;
 }
 
 .slide img {
@@ -111,7 +131,6 @@ main > ul {
 .scroll-left,
 .scroll-right {
 	position: absolute;
-	width: 16%;
 	height: 100%;
 	top: 0;
 	display: flex;
@@ -121,6 +140,16 @@ main > ul {
 	align-items: center;
 	transition: all .2s;
 	cursor: pointer;
+}
+
+nav:has(.grid-view) + main .scroll-left,
+nav:has(.grid-view) + main .scroll-right {
+	width: 16%;
+}
+
+nav:has(.list-view) + main .scroll-left,
+nav:has(.list-view) + main .scroll-right {
+	width: 30px;
 }
 
 .scroll-left::after,
@@ -204,7 +233,7 @@ main > ul {
 .subbreed-tag.selected {
 	background-color: rgba(var(--light), 1);
 	border: 1px solid rgba(var(--accent), 0.8);
-	/* padding: 2px 6px; */
+	padding: 3px 7px;
 }
 
 .subbreed-list::-webkit-scrollbar {

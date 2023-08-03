@@ -1,10 +1,17 @@
 <link rel='stylesheet' href='../css/nav.css'>
+<script src='../js/nav.js'></script>
 <nav style='height: 80px;'>
 	<ul class='nav-links'>
 		<li<%= (url && (url === '/')) ? ' class=current' : '' %>><a href='/' >Home</a></li>
 		<li<%= (url && (url === '/dogs')) ? ' class=current' : '' %>><a href='/dogs' >All Dog Breeds</a></li>
 	</ul>
-	<div class='search'>
-		<input type='text'>
+	<div class='options'>
+		<div class='view-type grid-view'>
+			<div class='grid'></div>
+			<div class='list'></div>
+		</div>
+		<div class='search'>
+			<input type='text'>
+		</div>
 	</div>
 </nav>

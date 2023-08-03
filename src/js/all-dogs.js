@@ -1,5 +1,4 @@
 import { getDogs } from './fetch.js';
-import { initNavBar } from './ui.js';
 import { Dog } from './dog-class.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,5 +12,4 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 		document.querySelector('main').append($cards);
 	});
-	initNavBar();
 });

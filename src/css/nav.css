@@ -65,6 +65,60 @@ nav {
 	font-weight: 700;
 }
 
+.options {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 20px;
+	height: 100%;
+}
+
+.view-type {
+	display: flex;
+	position: relative;
+	height: 100%;
+	max-height: 40px;
+	align-items: center;
+	justify-content: center;
+	padding: 2%;
+	gap: 12px;
+	background-color: rgba(var(--dark), 0.1);
+	border-radius: 16px;
+}
+
+.grid,
+.list {
+	display: flex;
+	background-color: rgba(var(--dark), 0.5);
+	height: 100%;
+	aspect-ratio: 1;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	-webkit-mask-size: contain;
+	cursor: pointer;
+}
+
+.grid {
+	mask-image: url(../images/grid-svgrepo-com.svg);
+	-webkit-mask-image: url(../images/grid-svgrepo-com.svg);
+}
+
+.list {
+	mask-image: url(../images/list-svgrepo-com.svg);
+	-webkit-mask-image: url(../images/list-svgrepo-com.svg);
+}
+
+.view-type.grid-view .grid {
+	background-color: rgb(var(--dark));
+}
+
+.view-type.list-view .list {
+	background-color: rgb(var(--dark));
+}
+
 .search {
 	display: flex;
 	position: relative;
@@ -107,5 +161,5 @@ nav {
 .search input:focus {
 	background-color: rgba(var(--dark), 0.05);
 	outline: none;
-	box-shadow: 0px 1px 3px -2px black;
+	box-shadow: 0px 0px 7px -5px black;
 }
