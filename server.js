@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as ejs from 'ejs';
 import { fileURLToPath } from 'url';
 
-const { PORT=3000, LOCAL_ADDRESS='0.0.0.0' } = process.env
+const { PORT=process.env.PORT||3000, LOCAL_ADDRESS='0.0.0.0' } = process.env
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const fileTypes = {
