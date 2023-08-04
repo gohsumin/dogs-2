@@ -13,7 +13,9 @@ export class Dog {
 
 	async init() {
 		await this.getAssets();
-		this.makeSlideshow(this.stopLoading.bind(this));
+		this.makeSlideshow((() => {
+			this.stopLoading();
+		}).bind(this));
 	}
 
 	getCard() {
@@ -120,7 +122,7 @@ export class Dog {
 			scrollTimestamp = new Date().getTime();
 			setTimeout(() => {
 				if (!idle && new Date().getTime() - scrollTimestamp >= idleTime) {
-					this.setPaginatorVisibility($slideshow.closest('.slideshow-container'));
+					this.setPaginatorVisibility();
 					idle = true;
 					scrollTimestamp = new Date().getTime();
 				}
@@ -137,7 +139,8 @@ export class Dog {
 		this.$card.classList.remove('loading');
 	}
 
-	setPaginatorVisibility($slideshowContainer) {
+	setPaginatorVisibility() {
+		const $slideshowContainer = this.$card.querySelector('.slideshow-container')
 		const $slideshow = $slideshowContainer.querySelector('.slideshow');
 		const $left = $slideshowContainer.querySelector('.scroll-left');
 		const $right = $slideshowContainer.querySelector('.scroll-right');
@@ -150,7 +153,7 @@ export class Dog {
 			}
 		}
 		if ($right) {
-			if ($slideshow.scrollLeft + $slideshow.clientWidth >= $slideshow.scrollWidth) {
+			if ($slideshow.scrollLeft + $slideshow.clientWidth + 1 >= $slideshow.scrollWidth) {
 				$right.classList.add('opacity-0');
 			} else {
 				$right.classList.remove('opacity-0');

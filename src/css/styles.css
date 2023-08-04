@@ -37,17 +37,24 @@ body {
 main {
 	display: flex;
 	width: 100%;
+}
+
+nav:has(.grid-view) + main {
 	padding: 32px 74px;
 }
 
 @media screen and (max-width: 1200px) {
-	main {
+	nav:has(.grid-view) + main {
 		padding: 32px 48px;
 	}
 }
 
 @media screen and (max-width: 650px) {
-	main {
+	nav:has(.grid-view) + main {
 		padding: 32px;
 	}
+}
+
+nav:has(.list-view) + main {
+	padding: 32px 0;
 }

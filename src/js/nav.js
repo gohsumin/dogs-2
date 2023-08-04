@@ -30,6 +30,9 @@ function initNavBar() {
 		if (event.target.isSameNode($listButton) && event.currentTarget.classList.contains('grid-view')) {
 			event.currentTarget.classList.remove('grid-view');
 			event.currentTarget.classList.add('list-view');
+			Object.keys(window.dogs).forEach(breed => {
+				window.dogs[breed].setPaginatorVisibility();
+			});
 		} else if (event.target.isSameNode($gridButton) && event.currentTarget.classList.contains('list-view')) {
 			event.currentTarget.classList.remove('list-view');
 			event.currentTarget.classList.add('grid-view');

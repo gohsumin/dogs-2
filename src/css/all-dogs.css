@@ -59,26 +59,15 @@ nav:has(.grid-view) + main .dog-name {
 	margin: auto;
 	width: fit-content;
 	box-shadow: 0px 0px 14px -8px rgb(var(--dark));
+	background-color: rgba(var(--light-warm), 0.8);
+	border-radius: 8px;
+	backdrop-filter: blur(32px);
 }
 
 nav:has(.list-view) + main .dog-name {
-	padding: 12px;
-	top: 8px;
-	left: 8px;
-	width: 164px;
-}
-
-.dog-name::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
+	top: 28px;
 	left: 0;
-	backdrop-filter: blur(32px);
-	background-color: rgba(var(--light-warm), 0.8);
-	z-index: -1;
-	border-radius: 8px;
+	width: 180px;
 }
 
 .card[filter] .dog-name {
@@ -102,10 +91,6 @@ nav:has(.grid-view) + main .slideshow-container {
 	border-radius: 4px;
 }
 
-nav:has(.list-view) + main .slideshow-container {
-	border-radius: 12px;
-}
-
 nav:has(.list-view) + main .slideshow-container::after {
 	content: '';
 	position: absolute;
@@ -114,6 +99,8 @@ nav:has(.list-view) + main .slideshow-container::after {
 	bottom: 0;
 	width: 180px;
 	background-color: rgba(var(--medium-cool), 0.7);
+	filter: brightness(1.07);
+	backdrop-filter: blur(5px);
 	box-shadow: 2px 0px 12px -8px rgb(var(--dark));
 }
 
@@ -127,9 +114,9 @@ nav:has(.list-view) + main .slideshow-container::after {
 	overflow: scroll;
 	position: absolute;
 	top: 0;
+	right: 0;
+	bottom: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
 }
 
 nav:has(.grid-view) + main .slideshow {
@@ -137,7 +124,7 @@ nav:has(.grid-view) + main .slideshow {
 }
 
 nav:has(.list-view) + main .slideshow {
-	gap: 12px;
+	gap: 20px;
 	padding-left: 196px;
 	padding-right: 20px;
 	background-color: rgba(var(--medium-cool), 0.7);
@@ -157,7 +144,7 @@ nav:has(.grid-view) + main .slide {
 }
 
 nav:has(.list-view) + main .slide {
-	padding: 8px;
+	padding: 8px 0;
 }
 
 .slide img {
@@ -183,7 +170,6 @@ nav:has(.list-view) + main .slide img {
 	top: 0;
 	display: flex;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.15);
 	opacity: 0;
 	align-items: center;
 	transition: all .2s;
@@ -192,12 +178,14 @@ nav:has(.list-view) + main .slide img {
 
 nav:has(.grid-view) + main .scroll-left,
 nav:has(.grid-view) + main .scroll-right {
+	background-color: rgba(var(--dark), 0.2);
 	width: 16%;
 }
 
 nav:has(.list-view) + main .scroll-left,
 nav:has(.list-view) + main .scroll-right {
-	width: 30px;
+	background-color: rgba(var(--dark), 0.5);
+	width: 40px;
 }
 
 .scroll-left::after,
@@ -272,9 +260,9 @@ nav:has(.grid-view) + main .subbreed-list {
 }
 
 nav:has(.list-view) + main .subbreed-list {
-	width: 180px;
+	width: 172px;
 	max-height: 52px;
-	left: 4px;
+	left: 8px;
 	bottom: 8px;
 }
 
