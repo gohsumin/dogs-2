@@ -6,12 +6,14 @@
 		<li<%= (url && (url === '/dogs')) ? ' class=current' : '' %>><a href='/dogs' >All Dog Breeds</a></li>
 	</ul>
 	<div class='options'>
+		<% if ((url && (url === '/dogs'))) { %>
 		<div class='view-type grid-view'>
 			<div class='grid'></div>
 			<div class='list'></div>
 		</div>
+		<% } %>
 		<div class='search'>
-			<input type='text'>
+			<input type='text' placeholder='work in progress!  🔨'>
 		</div>
 	</div>
 </nav>

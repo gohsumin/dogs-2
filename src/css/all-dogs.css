@@ -1,5 +1,6 @@
 .cards {
 	transition: all .3s;
+	height: fit-content;
 }
 
 nav:has(.grid-view) + main .cards {
@@ -98,7 +99,7 @@ nav:has(.list-view) + main .slideshow-container::after {
 	left: 0;
 	bottom: 0;
 	width: 180px;
-	background-color: rgba(var(--medium-cool), 0.7);
+	background-color: rgba(var(--medium-cool), 0.9);
 	filter: brightness(1.07);
 	backdrop-filter: blur(5px);
 	box-shadow: 2px 0px 12px -8px rgb(var(--dark));
@@ -149,10 +150,13 @@ nav:has(.list-view) + main .slide {
 
 .slide img {
 	height: 100%;
-	width: 100%;
 	object-fit: cover;
 	cursor: default !important;
 	user-select: none;
+}
+
+nav:has(.grid-view) + main .slide img {
+	width: 100%;
 }
 
 nav:has(.list-view) + main .slide img {

@@ -10,7 +10,7 @@ nav {
 	position: fixed;
 	top: 0;
 	color: rgba(var(--accent));
-	background-color: rgba(var(--light-warm), 0.9);
+	background-color: rgba(var(--light-warm), 0.95);
 	backdrop-filter: blur(20px);
 	transition: all .2s;
 }
@@ -47,10 +47,10 @@ nav {
 	}
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 600px) {
 	.nav-links {
-		gap: 12px;
-		font-size: 14px;
+		flex-direction: column;
+		gap: 4px;
 	}
 }
 
@@ -71,6 +71,12 @@ nav {
 	justify-content: flex-end;
 	gap: 20px;
 	height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+	.options {
+		gap: 12px;
+	}
 }
 
 .view-type {
@@ -156,6 +162,16 @@ nav {
 	border-radius: 16px;
 	border: 0.1px solid transparent;
 	transition: all .1s;
+}
+
+.search input::placeholder {
+	opacity: 0;
+	font-size: 13px;
+	transition: all .3s;
+}
+
+.search input:hover::placeholder {
+	opacity: 1;
 }
 
 .search input:focus {

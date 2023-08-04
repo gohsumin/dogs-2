@@ -6,7 +6,7 @@
 
 .opacity-0 {
 	opacity: 0 !important;
-	cursor: none;
+	cursor: unset !important;
 }
 
 .hide {
@@ -37,6 +37,7 @@ body {
 main {
 	display: flex;
 	width: 100%;
+	min-height: 100%;
 }
 
 nav:has(.grid-view) + main {

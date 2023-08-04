@@ -140,7 +140,8 @@ export class Dog {
 	}
 
 	setPaginatorVisibility() {
-		const $slideshowContainer = this.$card.querySelector('.slideshow-container')
+		const $slideshowContainer = this.$card.querySelector('.slideshow-container');
+		if (!$slideshowContainer) return;
 		const $slideshow = $slideshowContainer.querySelector('.slideshow');
 		const $left = $slideshowContainer.querySelector('.scroll-left');
 		const $right = $slideshowContainer.querySelector('.scroll-right');

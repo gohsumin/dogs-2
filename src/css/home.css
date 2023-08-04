@@ -1,0 +1,8 @@
+.coming-soon {
+	display: flex;
+	width: 100%;
+	margin-top: 64px;
+	justify-content: center;
+	font-size: 18px;
+	color: rgba(var(--dark), 0.9);
+}
