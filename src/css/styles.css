@@ -24,7 +24,7 @@ ul, li {
 }
 
 body {
-	padding: 86px 0 0 0;
+	padding: 86px 0;
 	margin: 0;
 	height: 100dvh;
 	display: flex;
@@ -37,25 +37,17 @@ body {
 main {
 	display: flex;
 	width: 100%;
-	min-height: 100%;
-}
-
-nav:has(.grid-view) + main {
 	padding: 32px 74px;
 }
 
 @media screen and (max-width: 1200px) {
-	nav:has(.grid-view) + main {
+	main {
 		padding: 32px 48px;
 	}
 }
 
 @media screen and (max-width: 650px) {
-	nav:has(.grid-view) + main {
+	main {
 		padding: 32px;
 	}
-}
-
-nav:has(.list-view) + main {
-	padding: 32px 0;
 }

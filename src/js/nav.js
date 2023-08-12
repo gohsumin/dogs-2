@@ -26,16 +26,42 @@ function initNavBar() {
 
 	const $gridButton = $nav.querySelector('.grid');
 	const $listButton = $nav.querySelector('.list');
-	$nav.querySelector('.view-type').addEventListener('click', (event) => {
+	$nav.querySelector('.view-type')?.addEventListener('click', (event) => {
 		if (event.target.isSameNode($listButton) && event.currentTarget.classList.contains('grid-view')) {
 			event.currentTarget.classList.remove('grid-view');
 			event.currentTarget.classList.add('list-view');
-			Object.keys(window.dogs).forEach(breed => {
-				window.dogs[breed].setPaginatorVisibility();
-			});
+			if (window.dogs) {
+				window.dogs.forEach(dog => {
+					dog.setPaginatorVisibility();
+				});
+			}
 		} else if (event.target.isSameNode($gridButton) && event.currentTarget.classList.contains('list-view')) {
 			event.currentTarget.classList.remove('list-view');
 			event.currentTarget.classList.add('grid-view');
+			if (window.dogs) {
+				window.dogs.forEach(dog => {
+					dog.setPaginatorVisibility();
+				});
+			}
 		}
-	})
+	});
+
+	const filterCards = (event) => {
+		const searchKey = event.currentTarget.value.toLowerCase();
+		document.querySelectorAll('.card').forEach($card => {
+			if ($card.getAttribute('breed').indexOf(searchKey) === 0) {
+				$card.classList.remove('hide');
+			} else {
+				$card.classList.add('hide');
+			}
+		});
+	}
+	document.querySelector('.search input')?.addEventListener('input', filterCards);
+	document.querySelector('.search input')?.addEventListener('focus', filterCards);
+	document.querySelector('.search .clear')?.addEventListener('click', () => {
+		document.querySelector('.search input').value = '';
+		document.querySelectorAll('.card').forEach($card => {
+			$card.classList.remove('hide');
+		});
+	});
 }

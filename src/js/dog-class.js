@@ -1,46 +1,91 @@
 import { getDogImages } from './fetch.js';
 
 export class Dog {
-	minNumImages = 20;
 
 	constructor(breed, subBreeds) {
 		this.breed = breed;
 		this.subBreeds = subBreeds;
+	}
+	
+	async initCard() {
 		this.makeCard();
 		this.makeSubBreedList();
 		this.startLoading();
-	}
-
-	async init() {
-		await this.getAssets();
 		this.makeSlideshow((() => {
+			this.setPaginatorVisibility();
 			this.stopLoading();
 		}).bind(this));
 	}
 
-	getCard() {
-		return this.$card;
+	async initDogFeed(subBreed) {
+		await this.getAssets(200);
+		const $dogFeed = document.createElement('div');
+		$dogFeed.className = 'dog-feed';
+		if (!Array.isArray(this.images)) {
+			Object.keys(this.images).forEach(subBreed => {
+				this.images[subBreed].forEach(img => {
+					const $img = new Image();
+					$img.addEventListener('load', () => {
+						$img.setAttribute('subBreed', subBreed);
+						$dogFeed.append($img);
+					});
+					$img.src = img;
+				});
+			});
+		} else {
+			this.images.forEach(img => {
+				const $img = new Image();
+				$img.addEventListener('load', () => {
+					$dogFeed.append($img);
+				});
+				$img.src = img;
+			});
+		}
+		this.$dogFeed = $dogFeed;
+
+		if (this.subBreeds) {
+			const $subBreedList = document.createElement('div');
+			$subBreedList.className = 'nav-subbreed-list';
+			for (const sb of this.subBreeds) {
+				const $subBreedTag = document.createElement('a');
+				$subBreedTag.className = `nav-subbreed-tag${sb === subBreed ? ' current' : ''}`;
+				$subBreedTag.innerHTML = sb;
+				$subBreedTag.href = `../${this.breed}/${sb}`;
+				$subBreedList.append($subBreedTag);
+			}
+			document.querySelector('.nav-left').append($subBreedList);
+		}
 	}
 
-	async getAssets() {
+	async getAssets(minNumImages) {
 		if (this.subBreeds.length) {
-			const numSubBreedImages = (this.minNumImages / this.subBreeds.length < 10)
+			const numSubBreedImages = (minNumImages / this.subBreeds.length < 10)
 				? 10
-				: (this.minNumImages / this.subBreeds.length);
+				: (minNumImages / this.subBreeds.length);
 			let subBreedImages = {};
 			for (const subBreed of this.subBreeds) {
 				subBreedImages[subBreed] = await getDogImages(this.breed, subBreed, numSubBreedImages);
 			}
 			this.images = subBreedImages;
 		} else {
-			this.images = await getDogImages(this.breed, null, this.minNumImages);
+			this.images = await getDogImages(this.breed, null, minNumImages);
 		}
+	}
+
+	getDogFeed() {
+		return this.$dogFeed;
+	}
+
+	getCard() {
+		return this.$card;
 	}
 
 	makeCard() {
 		const $card = document.createElement('li');
-		$card.className = `card ${this.breed}`;
-		const $name = document.createElement('div');
+		$card.className = `card`;
+		$card.setAttribute('breed', this.breed);
+		const $name = document.createElement('a');
+		$name.href = `dogs/${this.breed}`;
 		$name.className = 'dog-name';
 		$name.innerHTML = `<span></span>${this.breed}`;
 		$card.append($name);
@@ -76,7 +121,8 @@ export class Dog {
 					const $img = new Image();
 					$img.addEventListener('load', () => {
 						const $slide = document.createElement('div');
-						$slide.className = `slide ${subBreed}`;
+						$slide.className = `slide`;
+						$slide.setAttribute('subBreed', subBreed);
 						$slide.append($img);
 						$slideshow.append($slide);
 						count++;
@@ -184,20 +230,22 @@ export class Dog {
 
 	addSubBreedTagListener($subBreedTag, subBreed) {
 		$subBreedTag.addEventListener('click', (event) => {
-			if (this.$card.getAttribute('filter') === subBreed) {
-				this.$card.removeAttribute('filter');
+			if (this.$card.getAttribute('subbreed-filter') === subBreed) {
+				this.$card.removeAttribute('subbreed-filter');
 				this.$card.querySelector('.dog-name span').innerHTML = '';
+				this.$card.querySelector('.dog-name').href = `dogs/${this.breed}`;
 				event.currentTarget.classList.remove('selected');
 				this.$card.querySelectorAll(`.slide.hide`).forEach($slide => {
 					$slide.classList.remove('hide');
 				});
 			} else {
-				this.$card.setAttribute('filter', subBreed);
+				this.$card.setAttribute('subbreed-filter', subBreed);
 				this.$card.querySelector('.dog-name span').innerHTML = subBreed;
+				this.$card.querySelector('.dog-name').href = `dogs/${this.breed}/${subBreed}`;
 				this.$card.querySelector('.selected')?.classList.remove('selected');
 				event.currentTarget.classList.add('selected');
 				this.$card.querySelectorAll(`.slide`).forEach($slide => {
-					if ($slide.classList.contains(subBreed)) {
+					if ($slide.getAttribute('subBreed') === subBreed) {
 						$slide.classList.remove('hide');
 					} else {
 						$slide.classList.add('hide');

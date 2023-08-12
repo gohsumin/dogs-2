@@ -1,27 +1,29 @@
+nav:has(.list-view) + main {
+	padding: 32px 0;
+}
+
 .cards {
-	transition: all .3s;
 	height: fit-content;
 }
 
 nav:has(.grid-view) + main .cards {
 	width: 100%;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	grid-gap: 38px 28px;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 34px 28px;
 }
 
 nav:has(.list-view) + main .cards {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 28px;
+	gap: 34px;
 }
 
 .card {
 	position: relative;
 	display: flex;
 	width: 100%;
-	transition: all .3s;
 }
 
 nav:has(.grid-view) + main .card {
@@ -50,6 +52,8 @@ nav:has(.list-view) + main .card {
 	font-size: 16px;
 	font-weight: 600;
 	color: rgba(var(--accent), 0.8);
+	border-radius: 8px;
+	text-decoration: none;
 }
 
 nav:has(.grid-view) + main .dog-name {
@@ -61,21 +65,37 @@ nav:has(.grid-view) + main .dog-name {
 	width: fit-content;
 	box-shadow: 0px 0px 14px -8px rgb(var(--dark));
 	background-color: rgba(var(--light-warm), 0.8);
-	border-radius: 8px;
 	backdrop-filter: blur(32px);
 }
 
-nav:has(.list-view) + main .dog-name {
-	top: 28px;
-	left: 0;
-	width: 180px;
+nav:has(.grid-view) + main .dog-name:hover {
+	cursor: pointer;
+	background-color: rgba(var(--light-warm), 1);
+	color: rgba(var(--accent), 1);
 }
 
-.card[filter] .dog-name {
+nav:has(.list-view) + main .dog-name {
+	bottom: 68px;
+	left: 0;
+	width: 164px;
+	margin: 0 8px;
+	height: 42px;
+	align-content: center;
+	flex-wrap: wrap;
+	background-color: rgba(255, 255, 255, 0);
+}
+
+nav:has(.list-view) + main .dog-name:hover {
+	cursor: pointer;
+	color: rgba(var(--accent), 1);
+	background-color: rgba(var(--light-warm));
+}
+
+.card[subbreed-filter] .dog-name {
 	gap: 5px;
 }
 
-.card[filter] .dog-name span {
+.card[subbreed-filter] .dog-name span {
 	color: rgba(var(--accent), 0.6);
 }
 

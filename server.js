@@ -1,3 +1,5 @@
+import { getDogs } from './src/js/fetch.js';
+import { Dog } from './src/js/dog-class.js';
 import * as http from 'http';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -14,33 +16,77 @@ const fileTypes = {
 	svg: 'image/svg+xml',
 	ico: "image/x-icon",
 };
+let dogList = {};
+let isInitial = true;
 
-http.createServer(function (req, res) {
-	if (path.extname(req.url)) {
-		const ext = path.extname(req.url).slice(1);
-		const contentType = fileTypes[ext];
-		if (!contentType) {
-			console.log(`unsupported: ${ext}`);
-			return;
+function processURL(url) {
+	if (url === '/') {
+		return { file: 'home.ejs', data: { url: url, dogs: dogList, breed: null }, status: 200 };
+	}
+	if (url === '/dogs') {
+		return { file: 'all-dogs.ejs', data: { url: url, dogs: dogList, breed: null, dog: null, subBreed: null }, status: 200 };
+	}
+	const dogPageMatches = url.match(/\/dogs\/([a-zA-Z ]+)\/*([a-zA-Z ]*)/);
+	if (dogPageMatches) {
+		const breed = dogPageMatches[1];
+		const subBreed = dogPageMatches[2];
+		if (dogList[breed] !== undefined) {
+			return { file: 'dog.ejs', data: { url: url, breed: breed, dog: dogList[breed], subBreed: subBreed }, status: 200 };
 		}
-		res.writeHead(200, { 'Content-type': contentType });
-		fs.readFile(__dirname + '/src' + req.url, 'utf8', function (err, data) {
-			if (err) throw err;
-			res.end(data);
-		});
+	}
+	return { file: '404.ejs', data: {}, status: 404 };
+}
+
+function serveFile(url, res) {
+	const ext = path.extname(url).slice(1);
+	const contentType = fileTypes[ext];
+	if (!contentType) {
+		console.log(`unsupported: ${ext}`);
 		return;
 	}
-	
-	const filePath = (req.url === '/') ?
-	'/src/ejs/home.ejs' :
-	(req.url === '/dogs') ?
-	'/src/ejs/all-dogs.ejs' :
-	req.url.match(/\/dogs\/[a-zA-Z ]+/) ?
-	'/src/ejs/dog.ejs' :
-	'/src/ejs/404.ejs';
-
-	ejs.renderFile(__dirname + filePath, {url: req.url}, function (err, html) {
+	res.writeHead(200, { 'Content-type': contentType });
+	fs.readFile(`${__dirname}/src/${ext}/${path.basename(url)}`, 'utf8', function (err, data) {
 		if (err) throw err;
-		res.end(html);
+		res.end(data);
 	});
-}).listen(PORT, LOCAL_ADDRESS);
+}
+
+function renderEJS(url, res) {
+	const { file, data, status } = processURL(url);
+
+	ejs.renderFile(`${__dirname}/src/ejs/${file}`, data, function (err, html) {
+		if (err) throw err;
+		res.statusCode = status;
+		res.write(html);
+	});
+}
+
+const server = http.createServer();
+
+server.on('request', async (req, res) => {
+	const { url } = req;
+	req.on('error', (err) => {
+		console.log(err);
+	});
+
+	if (path.extname(url)) {
+		serveFile(url, res);
+	} else {
+		if (isInitial) {
+			const dogs = await getDogs();
+			for (const mainBreed of Object.keys(dogs)) {
+				const dog = new Dog(mainBreed, dogs[mainBreed]);
+				await dog.getAssets(20);
+				dogList[mainBreed] = dog;
+			}
+			isInitial = false;
+		}
+		renderEJS(url, res);
+		res.end();
+	}
+	return;
+});
+
+server.listen(PORT, LOCAL_ADDRESS, () => {
+	console.log(`listening at http://${LOCAL_ADDRESS}:${PORT}`);
+});

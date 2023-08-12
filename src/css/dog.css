@@ -1,3 +1,15 @@
-main {
-	height: 100%;
+.dog-feed {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: center;
+}
+
+.dog-feed img {
+	display: flex;
+	border-radius: 4px;
+	user-select: none;
+	width: fit-content;
+	height: 314px;
 }

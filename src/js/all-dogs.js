@@ -1,17 +1,25 @@
-import { getDogs } from './fetch.js';
 import { Dog } from './dog-class.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-	getDogs().then(dogs => {
-		const $cards = document.createElement('ul');
-		$cards.className = 'cards';
-		window.dogs = [];
-		Object.keys(dogs).forEach(mainBreed => {
-			const dog = new Dog(mainBreed, dogs[mainBreed]);
-			window.dogs[dog.breed] = dog;
-			$cards.append(dog.getCard());
-			dog.init();
+	displayCards();
+	window.addEventListener('resize', () => {
+		window.dogs.forEach(dog => {
+			dog.setPaginatorVisibility();
 		});
-		document.querySelector('main').append($cards);
 	});
 });
+
+function displayCards() {
+	const $cards = document.createElement('ul');
+	$cards.className = 'cards';
+	const $script = document.querySelector('script#all-dogs');
+	const dogs = JSON.parse($script.getAttribute('dogs'));
+	window.dogs = [];
+	Object.values(dogs).forEach(dog => {
+		const dogObj = Object.assign(new Dog, dog);
+		dogObj.initCard();
+		window.dogs.push(dogObj);
+		$cards.append(dogObj.getCard());
+	});
+	document.querySelector('main').append($cards);
+}

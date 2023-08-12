@@ -2,9 +2,9 @@
 <html lang='en'>
 	<head>
 		<meta charset='UTF-8'>
-		<link rel='stylesheet' href='../css/styles.css'>
-		<link rel='stylesheet' href='../css/dog.css'>
-		<script src='../js/dog.js' type='module'></script>
+		<link rel='stylesheet' href='styles.css'>
+		<link rel='stylesheet' href='dog.css'>
+		<script id='dog' src='dog.js' type='module' dog='<%- JSON.stringify(dog); %>'' subBreed='<%- JSON.stringify(subBreed); %>'></script>
 	</head>
 	<body>
 		<%- include('./nav'); %>

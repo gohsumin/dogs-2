@@ -1,19 +1,30 @@
-<link rel='stylesheet' href='../css/nav.css'>
-<script src='../js/nav.js'></script>
+<link rel='stylesheet' href='nav.css'>
+<script src='nav.js'></script>
 <nav style='height: 80px;'>
-	<ul class='nav-links'>
-		<li<%= (url && (url === '/')) ? ' class=current' : '' %>><a href='/' >Home</a></li>
-		<li<%= (url && (url === '/dogs')) ? ' class=current' : '' %>><a href='/dogs' >All Dog Breeds</a></li>
-	</ul>
+	<div class='nav-left'>
+		<ul class='nav-links'>
+			<li<%= (url && (url === '/')) ? ' class=current' : '' %>><a href='/' >Home</a></li>
+			<li<%= (url && (url === '/dogs')) ? ' class=current' : '' %>><a href='/dogs' >All Dog Breeds</a></li>
+		</ul>
+		<% if (breed) { %>
+			<div class='dog-page-title'>
+				<span><%= breed %></span>
+				<% if (subBreed) { %>
+					<span><%= subBreed %></span>
+				<% } %>
+			</div>
+		<% } %>
+	</div>
 	<div class='options'>
 		<% if ((url && (url === '/dogs'))) { %>
 		<div class='view-type grid-view'>
 			<div class='grid'></div>
 			<div class='list'></div>
 		</div>
-		<% } %>
 		<div class='search'>
-			<input type='text' placeholder='work in progress!  🔨'>
+			<input type='text' placeholder='search 🐶'>
+			<span class='clear'></span>
 		</div>
+		<% } %>
 	</div>
 </nav>

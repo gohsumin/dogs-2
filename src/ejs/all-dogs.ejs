@@ -2,9 +2,12 @@
 <html lang='en'>
 	<head>
 		<meta charset="UTF-8">
-		<link rel='stylesheet' href='../css/styles.css'>
-		<link rel='stylesheet' href='../css/all-dogs.css'>
-		<script src='../js/all-dogs.js' type='module'></script>
+		<link rel='stylesheet' href='styles.css'>
+		<link rel='stylesheet' href='all-dogs.css'>
+		<script>
+			
+		</script>
+		<script src='all-dogs.js' id='all-dogs' type='module' dogs='<%- JSON.stringify(dogs); %>'></script>
 	</head>
 	<body>
 		<%- include('./nav'); %>
