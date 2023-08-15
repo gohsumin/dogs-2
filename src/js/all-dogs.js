@@ -1,12 +1,7 @@
-import { Dog } from './dog-class.js';
+import { DogCard } from './dogcard-class.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	displayCards();
-	window.addEventListener('resize', () => {
-		window.dogs.forEach(dog => {
-			dog.setPaginatorVisibility();
-		});
-	});
 });
 
 function displayCards() {
@@ -15,11 +10,15 @@ function displayCards() {
 	const $script = document.querySelector('script#all-dogs');
 	const dogs = JSON.parse($script.getAttribute('dogs'));
 	window.dogs = [];
-	Object.values(dogs).forEach(dog => {
-		const dogObj = Object.assign(new Dog, dog);
-		dogObj.initCard();
-		window.dogs.push(dogObj);
-		$cards.append(dogObj.getCard());
-	});
+	for (const dog of Object.values(dogs)) {
+		const dogCard = Object.assign(new DogCard, dog);
+		dogCard.initCard().then(() => {
+			window.dogs.push(dogCard);
+			$cards.append(dogCard.getCard());
+		});
+		window.addEventListener('resize', () => {
+			dogCard.setPaginatorVisibility();
+		});
+	}
 	document.querySelector('main').append($cards);
 }

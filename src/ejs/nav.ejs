@@ -8,10 +8,10 @@
 		</ul>
 		<% if (breed) { %>
 			<div class='dog-page-title'>
-				<span><%= breed %></span>
 				<% if (subBreed) { %>
-					<span><%= subBreed %></span>
+					<span class='subbreed'><%= subBreed %></span>
 				<% } %>
+				<span class='breed'><%= breed %></span>
 			</div>
 		<% } %>
 	</div>

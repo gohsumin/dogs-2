@@ -1,4 +1,4 @@
-import { getDogs } from './src/js/fetch.js';
+import { getDogs, getDog } from './src/js/fetch.js';
 import { Dog } from './src/js/dog-class.js';
 import * as http from 'http';
 import * as path from 'path';
@@ -17,21 +17,35 @@ const fileTypes = {
 	ico: "image/x-icon",
 };
 let dogList = {};
-let isInitial = true;
+const dogs = await getDogs();
+for (const mainBreed of Object.keys(dogs)) {
+	const dog = new Dog(mainBreed, dogs[mainBreed]);
+	await dog.getAssets(200);
+	dogList[mainBreed] = dog;
+}
+
+const dogPageMatches = (url) => {
+	const match = url.match(/\/dogs\/([a-zA-Z ]+)\/*([a-zA-Z ]*)/);
+	if (!match) {
+		return false;
+	}
+	return {
+		breed: match[1] === '' ? null : match[1],
+		subBreed: match[2] === '' ? null : match[2]
+	};
+};
 
 function processURL(url) {
 	if (url === '/') {
 		return { file: 'home.ejs', data: { url: url, dogs: dogList, breed: null }, status: 200 };
 	}
 	if (url === '/dogs') {
-		return { file: 'all-dogs.ejs', data: { url: url, dogs: dogList, breed: null, dog: null, subBreed: null }, status: 200 };
+		return { file: 'all-dogs.ejs', data: { url: url, dogs: dogList, breed: null }, status: 200 };
 	}
-	const dogPageMatches = url.match(/\/dogs\/([a-zA-Z ]+)\/*([a-zA-Z ]*)/);
-	if (dogPageMatches) {
-		const breed = dogPageMatches[1];
-		const subBreed = dogPageMatches[2];
-		if (dogList[breed] !== undefined) {
-			return { file: 'dog.ejs', data: { url: url, breed: breed, dog: dogList[breed], subBreed: subBreed }, status: 200 };
+	const matches = dogPageMatches(url);
+	if (matches) {
+		if (dogList[matches.breed] !== undefined) {
+			return { file: 'dog.ejs', data: { url: url, breed: matches.breed, dog: dogList[matches.breed], subBreed: matches.subBreed }, status: 200 };
 		}
 	}
 	return { file: '404.ejs', data: {}, status: 404 };
@@ -71,20 +85,11 @@ server.on('request', async (req, res) => {
 
 	if (path.extname(url)) {
 		serveFile(url, res);
-	} else {
-		if (isInitial) {
-			const dogs = await getDogs();
-			for (const mainBreed of Object.keys(dogs)) {
-				const dog = new Dog(mainBreed, dogs[mainBreed]);
-				await dog.getAssets(20);
-				dogList[mainBreed] = dog;
-			}
-			isInitial = false;
-		}
-		renderEJS(url, res);
-		res.end();
+		return;
 	}
-	return;
+
+	renderEJS(url, res);
+	res.end();
 });
 
 server.listen(PORT, LOCAL_ADDRESS, () => {

@@ -195,15 +195,16 @@ nav:has(.list-view) + main .slide img {
 	display: flex;
 	justify-content: center;
 	opacity: 0;
+	backdrop-filter: blur(1px);
 	align-items: center;
-	transition: all .2s;
+	transition: all .1s;
 	cursor: pointer;
 }
 
 nav:has(.grid-view) + main .scroll-left,
 nav:has(.grid-view) + main .scroll-right {
 	background-color: rgba(var(--dark), 0.2);
-	width: 16%;
+	width: 14%;
 }
 
 nav:has(.list-view) + main .scroll-left,
@@ -229,7 +230,7 @@ nav:has(.list-view) + main .scroll-right {
 	-webkit-mask-size: contain;
 	-webkit-mask-image: url(../images/chevron-left-circle-svgrepo-com.svg);
 	opacity: 0;
-	transition: all .2s;
+	transition: all .1s;
 }
 
 .scroll-left {

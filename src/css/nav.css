@@ -9,7 +9,6 @@ nav {
 	z-index: 2;
 	position: fixed;
 	top: 0;
-	color: rgba(var(--accent));
 	background-color: rgba(var(--light-warm), 0.95);
 	backdrop-filter: blur(20px);
 	transition: all .2s;
@@ -31,7 +30,13 @@ nav {
 	display: flex;
 	gap: 18px;
 	font-size: 20px;
+	color: rgba(var(--accent), 1);
 	transition: all .3s;
+}
+
+.nav-left:has(.dog-page-title) .nav-links {
+	font-size: 18px;
+	color: rgba(var(--accent), 0.8);
 }
 
 @media screen and (max-width: 1000px) {
@@ -39,11 +44,19 @@ nav {
 		gap: 16px;
 		font-size: 18px;
 	}
+
+	.nav-left:has(.dog-page-title) .nav-links {
+		font-size: 16px;
+	}
 }
 
 @media screen and (max-width: 750px) {
 	.nav-links {
 		font-size: 16px;
+	}
+
+	.nav-left:has(.dog-page-title) .nav-links {
+		font-size: 14px;
 	}
 }
 
@@ -211,6 +224,8 @@ nav {
 .nav-left {
 	display: flex;
 	align-items: center;
+	height: 35px;
+	width: 100%;
 }
 
 .dog-page-title {
@@ -221,11 +236,12 @@ nav {
 	padding-left: 18px;
 	border-left: 1px solid rgba(var(--accent), 0.5);
 	margin-right: 18px;
-	padding-right: 18px;
-	border-right: 1px solid rgba(var(--accent), 0.5);
+	white-space: nowrap;
+	display: flex;
+	gap: 8px;
 }
 
-.dog-page-title span:nth-child(2) {
+.dog-page-title .subbreed {
 	opacity: 0.5;
 }
 
@@ -233,12 +249,32 @@ nav {
 	display: flex;
 	gap: 8px;
 	height: 100%;
+	align-items: center;
+	padding-left: 20px;
+	border-left: 1px solid rgba(var(--accent), 0.5);
+	opacity: 0.8;
+	width: 100%;
+	overflow-x: scroll;
 }
 
 .nav-subbreed-tag {
 	text-decoration: none;
 	display: flex;
-	padding: 4px 6px;
-	border-radius: 12px;
-	box-shadow: 14px -3px 20px -12px rgba(var(--accent), 0.3), 7px 4px 9px -7px rgba(var(--accent), 0.3), -5px 2px 12px -8px rgb(var(--accent), 0.4);
+	align-items: center;
+	height: 100%;
+	text-transform: uppercase;
+	padding: 4px 12px;
+	border-radius: 5px;
+	user-select: none;
+	color: var(--dark);
+	border: 1px solid rgba(var(--accent), 0.2);
+}
+
+.nav-subbreed-tag.current {
+	backdrop-filter: brightness(1.02);
+	border: 1px solid rgba(var(--accent), 0.8);
+}
+
+.nav-subbreed-tag:hover {
+	background-color: rgba(var(--accent), 0.05);
 }
